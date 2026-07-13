@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Finix — The Finance Cycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* direction: editorial fintech / ink + amber + teal
-     Mobile-first: CSS scroll-snap works WITHOUT JavaScript
-     (iPhone Preview / Files often blocks scripts). */
+  /* direction: editorial fintech / ink + amber + teal — restored cycle visual + scroll-snap for phone */
   :root {
     --bg: #070b12;
-    --bg-elevated: rgba(14, 21, 34, 0.85);
+    --bg-elevated: rgba(14, 21, 34, 0.72);
     --ink: #f4f1ea;
     --muted: #9aa3b5;
     --line: rgba(244, 241, 234, 0.12);
@@ -20,8 +21,8 @@
     --port: #3ecfac;
     --div: #e8b86d;
     --news: #c4b5fd;
-    --font-display: "Avenir Next", "Segoe UI", system-ui, sans-serif;
-    --font-body: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --font-display: "Syne", "Avenir Next", sans-serif;
+    --font-body: "Figtree", "Avenir Next", sans-serif;
     --nav-h: 4.25rem;
   }
 
@@ -35,10 +36,10 @@
     color: var(--ink);
     font-family: var(--font-body);
     background:
-      radial-gradient(900px 480px at 10% -5%, rgba(232, 184, 109, 0.18), transparent 55%),
-      radial-gradient(800px 420px at 95% 5%, rgba(62, 207, 172, 0.12), transparent 50%),
+      radial-gradient(1100px 560px at 12% -8%, rgba(232, 184, 109, 0.2), transparent 55%),
+      radial-gradient(900px 520px at 92% 8%, rgba(62, 207, 172, 0.14), transparent 52%),
+      radial-gradient(700px 480px at 48% 108%, rgba(126, 182, 255, 0.12), transparent 55%),
       var(--bg);
-    /* Stacked slides — swipe UP for next (works with no JS) */
     overflow-y: auto;
     overflow-x: hidden;
     height: 100%;
@@ -48,151 +49,215 @@
     touch-action: pan-y;
   }
 
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
   .slide {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: clamp(0.65rem, 1.6vh, 1.2rem);
+    gap: clamp(0.7rem, 1.8vh, 1.3rem);
     min-height: 100%;
     min-height: 100dvh;
-    padding: clamp(1.1rem, 3.5vh, 2.5rem) clamp(1rem, 5vw, 3.5rem);
-    padding-bottom: calc(var(--nav-h) + 1rem + env(safe-area-inset-bottom, 0px));
+    padding: clamp(1.2rem, 4vh, 3rem) clamp(1.1rem, 6vw, 5rem);
+    padding-bottom: calc(var(--nav-h) + 1.1rem + env(safe-area-inset-bottom, 0px));
     scroll-snap-align: start;
     scroll-snap-stop: always;
     position: relative;
+    z-index: 1;
   }
 
   .kicker {
     color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-size: 0.72rem;
-    font-weight: 700;
+    letter-spacing: 0.22em;
+    font-size: clamp(0.7rem, 1.1vw, 0.82rem);
+    font-weight: 600;
   }
   h1, h2 {
     font-family: var(--font-display);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: 1.08;
+    line-height: 1.05;
   }
-  h1 { font-size: clamp(1.85rem, 7vw, 3.4rem); }
-  h2 { font-size: clamp(1.45rem, 5.5vw, 2.6rem); }
+  h1 { font-size: clamp(2rem, 5.2vw, 3.75rem); max-width: 14ch; }
+  h2 { font-size: clamp(1.65rem, 3.8vw, 2.85rem); max-width: 18ch; }
   p, li {
-    font-size: clamp(0.95rem, 3.6vw, 1.15rem);
-    line-height: 1.5;
+    font-size: clamp(0.95rem, 1.55vw, 1.2rem);
+    line-height: 1.55;
     color: var(--muted);
-    max-width: 36rem;
+    max-width: 52ch;
   }
-  strong { color: var(--ink); }
-  .lede { color: var(--ink); font-size: clamp(1.05rem, 4vw, 1.3rem); }
-  .hint {
-    font-size: 0.85rem;
-    color: #7a8499;
-    margin-top: 0.35rem;
-  }
+  strong { color: var(--ink); font-weight: 600; }
+  .lede { font-size: clamp(1.05rem, 1.8vw, 1.35rem); color: var(--ink); max-width: 40ch; }
+  .hint { font-size: 0.85rem; color: #5c667c; }
   .hint em { color: var(--accent-2); font-style: normal; font-weight: 600; }
 
-  ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  ul { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+  ul li { max-width: 58ch; }
   ul li::before {
     content: "";
     display: inline-block;
-    width: 0.5rem; height: 0.5rem;
-    margin-right: 0.55rem;
+    width: 0.55rem; height: 0.55rem;
+    margin-right: 0.65rem;
     border-radius: 2px;
     background: var(--accent-2);
     vertical-align: 0.15em;
   }
 
-  .grid3 {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.7rem;
+  /* —— Restored three-circle cycle —— */
+  .cycle-stage {
+    perspective: 1200px;
     width: 100%;
-    max-width: 42rem;
-  }
-  @media (min-width: 860px) {
-    .grid3 { grid-template-columns: repeat(3, 1fr); }
-  }
-  .panel {
-    background: var(--bg-elevated);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 0.95rem 1rem;
     display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
+    justify-content: center;
+    margin: 0.2rem 0;
   }
-  .panel .stage {
-    font-size: 0.65rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 700;
+  .cycle-world {
+    position: relative;
+    width: min(92vw, 640px);
+    aspect-ratio: 1.35 / 1;
+    transform-style: preserve-3d;
+    transform: rotateX(10deg);
   }
-  .panel h3 { font-size: 1.05rem; letter-spacing: -0.02em; }
-  .panel p { font-size: 0.92rem; max-width: none; }
-
-  .who { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-  .who span {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 0.4rem 0.75rem;
-    font-size: 0.85rem;
-    color: var(--ink);
-  }
-
-  .dot {
-    display: inline-block;
-    width: 0.5rem; height: 0.5rem;
+  .orbit-ring {
+    position: absolute;
+    inset: 12% 10%;
+    border: 1px solid rgba(244, 241, 234, 0.08);
     border-radius: 50%;
-    margin-right: 0.4rem;
+    transform: rotateX(68deg);
   }
-  .dot.t { background: var(--trade); }
-  .dot.p { background: var(--port); }
-  .dot.d { background: var(--div); }
-
-  /* Cycle — flat on phone, readable without fancy 3D/JS */
-  .cycle {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.65rem;
-    max-width: 22rem;
-    margin: 0.4rem 0;
-  }
-  .cycle .node {
-    border-radius: 999px;
-    border: 1.5px solid var(--line);
-    background: rgba(14, 21, 34, 0.9);
-    min-height: 4.6rem;
+  .node {
+    position: absolute;
+    width: clamp(6.8rem, 16vw, 9rem);
+    height: clamp(6.8rem, 16vw, 9rem);
+    border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
+    background: linear-gradient(160deg, rgba(22, 32, 48, 0.95), rgba(10, 14, 22, 0.98));
+    border: 1.5px solid rgba(244, 241, 234, 0.18);
   }
-  .cycle .node.trade { border-color: rgba(126, 182, 255, 0.55); }
-  .cycle .node.port { border-color: rgba(62, 207, 172, 0.55); }
-  .cycle .node.div { border-color: rgba(232, 184, 109, 0.6); grid-column: 1 / -1; max-width: 11rem; justify-self: center; }
-  .cycle .node.news {
-    grid-column: 1 / -1;
-    max-width: 9rem;
-    justify-self: center;
+  .node::after {
+    content: "";
+    position: absolute;
+    inset: -16%;
+    border-radius: 50%;
+    z-index: -1;
+    filter: blur(20px);
+    opacity: 0.4;
+  }
+  .node.trade { top: 6%; left: 4%; border-color: rgba(126, 182, 255, 0.55); }
+  .node.trade::after { background: var(--trade); }
+  .node.port { top: 6%; right: 4%; border-color: rgba(62, 207, 172, 0.55); }
+  .node.port::after { background: var(--port); }
+  .node.div {
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-color: rgba(232, 184, 109, 0.6);
+  }
+  .node.div::after { background: var(--div); }
+  .node.news {
+    top: 36%;
+    left: 50%;
+    width: clamp(4.8rem, 11vw, 6.2rem);
+    height: clamp(4.8rem, 11vw, 6.2rem);
+    transform: translateX(-50%);
     border-style: dashed;
     border-color: rgba(196, 181, 253, 0.55);
-    min-height: 3.6rem;
   }
-  .cycle .name { font-weight: 800; font-size: 1rem; }
-  .cycle .role { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-  .flow {
-    font-size: 0.85rem;
-    color: #8b95a8;
-    letter-spacing: 0.02em;
+  .node.news::after { background: var(--news); opacity: 0.28; }
+  .node .name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(0.9rem, 1.9vw, 1.1rem);
+    letter-spacing: -0.02em;
   }
+  .node .role {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.15rem;
+  }
+  .arc {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .arc path {
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+  .arc.dashed path { stroke-dasharray: 6 7; opacity: 0.55; }
+
+  .grid3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    width: min(100%, 980px);
+  }
+  .panel {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(1rem, 2vh, 1.4rem) clamp(0.9rem, 1.4vw, 1.2rem);
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .panel .stage {
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .panel h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    letter-spacing: -0.02em;
+  }
+  .panel p { font-size: clamp(0.85rem, 1.25vw, 0.98rem); max-width: none; }
+
+  .who { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+  .who span {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.88rem;
+    color: var(--ink);
+    background: rgba(244, 241, 234, 0.03);
+  }
+  .dot {
+    display: inline-block;
+    width: 0.55rem; height: 0.55rem;
+    border-radius: 50%;
+    margin-right: 0.45rem;
+  }
+  .dot.t { background: var(--trade); }
+  .dot.p { background: var(--port); }
+  .dot.d { background: var(--div); }
 
   .nav {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    z-index: 50;
+    z-index: 200;
     display: flex;
     align-items: center;
     gap: 0.55rem;
@@ -200,13 +265,13 @@
     padding-bottom: calc(0.65rem + env(safe-area-inset-bottom, 0px));
     background: linear-gradient(to top, rgba(7,11,18,0.97) 60%, transparent);
   }
-  .nav a, .nav button {
+  .nav a {
     appearance: none;
     text-decoration: none;
     border: 1px solid var(--line);
     background: rgba(14, 21, 34, 0.95);
     color: var(--ink);
-    font: inherit;
+    font-family: var(--font-body);
     font-weight: 700;
     font-size: 0.95rem;
     border-radius: 12px;
@@ -215,7 +280,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
   }
   .nav .next {
     flex: 1;
@@ -231,11 +295,15 @@
     min-width: 3.2rem;
     text-align: center;
   }
+
+  @media (max-width: 820px) {
+    .grid3 { grid-template-columns: 1fr; }
+    h1, h2 { max-width: none; }
+    .cycle-world { transform: none; }
+  }
 </style>
 </head>
 <body>
-
-<!-- IMPORTANT FOR IPHONE: swipe UP to go to the next slide. No Safari / no JS needed. -->
 
 <section class="slide" id="s1">
   <div class="kicker">Finix · The Finance Cycle</div>
@@ -248,14 +316,25 @@
 <section class="slide" id="s2">
   <div class="kicker">The idea</div>
   <h2>Three agents. One cycle.</h2>
-  <p class="flow">Trading → Portfolio → Dividend → back again</p>
-  <div class="cycle" aria-label="Finance cycle">
-    <div class="node trade"><span class="name">Trading</span><span class="role">Agent</span></div>
-    <div class="node port"><span class="name">Portfolio</span><span class="role">Agent</span></div>
-    <div class="node news"><span class="name">News</span><span class="role">Feeds all three</span></div>
-    <div class="node div"><span class="name">Dividend</span><span class="role">Agent</span></div>
+  <div class="cycle-stage">
+    <div class="cycle-world" aria-label="Finance cycle diagram">
+      <div class="orbit-ring"></div>
+      <svg class="arc" viewBox="0 0 680 500">
+        <path d="M200 130 C 300 60, 380 60, 480 130" stroke="#7eb6ff"/>
+        <path d="M545 210 C 600 300, 520 390, 400 430" stroke="#3ecfac"/>
+        <path d="M280 430 C 160 370, 130 280, 175 210" stroke="#e8b86d"/>
+      </svg>
+      <svg class="arc dashed" viewBox="0 0 680 500">
+        <path d="M340 390 C 400 340, 460 280, 500 230" stroke="#e8b86d"/>
+        <path d="M450 170 C 360 185, 280 185, 230 170" stroke="#3ecfac"/>
+      </svg>
+      <div class="node trade"><span class="name">Trading</span><span class="role">Agent</span></div>
+      <div class="node port"><span class="name">Portfolio</span><span class="role">Agent</span></div>
+      <div class="node div"><span class="name">Dividend</span><span class="role">Agent</span></div>
+      <div class="node news"><span class="name">News</span><span class="role">All three</span></div>
+    </div>
   </div>
-  <p>News sits in the middle and informs every decision. Income and portfolio signals feed back into the loop.</p>
+  <p>Solid paths = the main loop. Dashed = money and signals flowing back. News sits in the middle and informs every decision.</p>
 </section>
 
 <section class="slide" id="s3">
@@ -296,7 +375,7 @@
       <p>Stocks, options, and beyond — still inside the same cycle.</p>
     </div>
   </div>
-  <p><strong>How it grows:</strong> today one agent, one strategy. Next: a team that talks — and one decides when to act.</p>
+  <p><strong>How it grows:</strong> today one agent, one strategy. Next: a team that talks to each other — and one of them decides when to act.</p>
 </section>
 
 <section class="slide" id="s5">
@@ -383,20 +462,17 @@
 </section>
 
 <nav class="nav" aria-label="Slide controls">
-  <!-- Plain links work even when JavaScript is blocked -->
   <a class="prev" id="prev" href="#s1">←</a>
   <span class="pageno" id="pageno">1 / 9</span>
   <a class="next" id="next" href="#s2">Next · swipe up ↑</a>
 </nav>
 
 <script>
-  /* Enhancement only — deck still works if this never runs */
   (function () {
     var ids = ['s1','s2','s3','s4','s5','s6','s7','s8','s9'];
     var prev = document.getElementById('prev');
     var next = document.getElementById('next');
     var page = document.getElementById('pageno');
-
     function indexFromHash() {
       var h = (location.hash || '#s1').replace('#','');
       var i = ids.indexOf(h);
@@ -410,7 +486,6 @@
       next.textContent = i === ids.length - 1 ? 'End' : 'Next · swipe up ↑';
     }
     window.addEventListener('hashchange', sync);
-    // Keep hash in sync while scrolling
     var slides = ids.map(function (id) { return document.getElementById(id); });
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
@@ -422,7 +497,7 @@
             sync();
           }
         });
-      }, { threshold: 0.6 });
+      }, { threshold: 0.55 });
       slides.forEach(function (s) { if (s) io.observe(s); });
     }
     sync();
