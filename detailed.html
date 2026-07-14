@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Finix — Detailed Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  /* direction: quiet fintech / ink + amber + teal
+     Companion to pitch-deck.html — this deck is the boardroom version:
+     denser type, more data, less motion. Scroll-snap so it works on
+     phones without any JS. */
+  :root {
+    --bg: #060a12;
+    --bg-panel: rgba(16, 22, 34, 0.72);
+    --bg-panel-solid: #10151d;
+    --ink: #f2ede2;
+    --muted: #939eb4;
+    --line: rgba(242, 237, 226, 0.1);
+    --line-2: rgba(242, 237, 226, 0.18);
+    --accent: #e8b86d;
+    --accent-2: #3ecfac;
+    --trade: #7eb6ff;
+    --port: #3ecfac;
+    --div: #e8b86d;
+    --news: #c4b5fd;
+    --danger: #f87171;
+    --font-display: "Fraunces", "Georgia", serif;
+    --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+    --nav-h: 4rem;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { height: 100%; scroll-behavior: smooth; background: var(--bg); }
+  body {
+    color: var(--ink);
+    font-family: var(--font-body);
+    background:
+      radial-gradient(900px 460px at 10% -6%, rgba(232, 184, 109, 0.14), transparent 55%),
+      radial-gradient(760px 420px at 95% 6%, rgba(62, 207, 172, 0.1), transparent 52%),
+      var(--bg);
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100dvh;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(0.75rem, 2vh, 1.4rem);
+    min-height: 100dvh;
+    padding: clamp(1.2rem, 4vh, 3rem) clamp(1.1rem, 6vw, 5.5rem);
+    padding-bottom: calc(var(--nav-h) + 1.1rem + env(safe-area-inset-bottom, 0px));
+    scroll-snap-align: start;
+    position: relative;
+    z-index: 1;
+  }
+  .slide.wide { max-width: none; }
+  .slide-inner { max-width: 68rem; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: inherit; }
+
+  .kicker {
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  h1 { font-size: clamp(2rem, 5vw, 3.4rem); }
+  h2 { font-size: clamp(1.5rem, 3.6vw, 2.4rem); }
+  h3 { font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 700; }
+
+  p, li, td, th {
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  p, li { max-width: 46rem; }
+  strong { color: var(--ink); font-weight: 600; }
+  .lede { color: var(--ink); font-size: clamp(1.05rem, 1.9vw, 1.3rem); }
+  .caption { font-size: 0.78rem; color: #6a7488; letter-spacing: 0.03em; }
+
+  ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  ul li::before {
+    content: "";
+    display: inline-block;
+    width: 0.4rem; height: 0.4rem;
+    margin-right: 0.55rem;
+    border-radius: 2px;
+    background: var(--accent-2);
+    vertical-align: 0.2em;
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left;
+    color: var(--accent);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid var(--line-2);
+  }
+  td {
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    vertical-align: top;
+  }
+  td strong { color: var(--ink); }
+  tr:last-child td { border-bottom: none; }
+
+  .grid { display: grid; gap: clamp(0.75rem, 1.5vw, 1.15rem); }
+  .grid.g2 { grid-template-columns: 1.15fr 0.85fr; }
+  .grid.g3 { grid-template-columns: repeat(3, 1fr); }
+  .grid.g4 { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 820px) {
+    .grid.g2, .grid.g3, .grid.g4 { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: clamp(0.95rem, 1.8vh, 1.3rem) clamp(0.95rem, 1.6vw, 1.3rem);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .panel .stage {
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .panel p { font-size: 0.9rem; max-width: none; }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .stat .n {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.5rem, 3.4vw, 2.4rem);
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .stat .l {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6a7488;
+  }
+  .stat .sub { font-size: 0.82rem; color: var(--muted); }
+
+  .dot {
+    display: inline-block;
+    width: 0.55rem; height: 0.55rem;
+    border-radius: 50%;
+    margin-right: 0.45rem;
+    vertical-align: 0.1em;
+  }
+  .dot.t { background: var(--trade); }
+  .dot.p { background: var(--port); }
+  .dot.d { background: var(--div); }
+  .dot.n { background: var(--news); }
+  .dot.c { background: var(--accent); }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    border: 1px solid var(--line-2);
+  }
+  .badge.live { color: #baf3dd; border-color: rgba(62, 207, 172, 0.5); background: rgba(62, 207, 172, 0.08); }
+  .badge.wip { color: #f7dfa8; border-color: rgba(232, 184, 109, 0.5); background: rgba(232, 184, 109, 0.08); }
+  .badge.todo { color: #f7bfbf; border-color: rgba(248, 113, 113, 0.4); background: rgba(248, 113, 113, 0.07); }
+
+  /* Consensus architecture diagram */
+  .arch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 1rem 0;
+  }
+  .arch .row {
+    display: flex;
+    gap: 0.55rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .arch .block {
+    background: var(--bg-panel-solid);
+    border: 1px solid var(--line-2);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    min-width: 8rem;
+    text-align: center;
+  }
+  .arch .block .n { font-weight: 700; color: var(--ink); font-size: 0.95rem; }
+  .arch .block .l { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 0.2rem; }
+  .arch .block.trade { border-color: rgba(126, 182, 255, 0.55); }
+  .arch .block.port { border-color: rgba(62, 207, 172, 0.55); }
+  .arch .block.div { border-color: rgba(232, 184, 109, 0.55); }
+  .arch .block.news { border-color: rgba(196, 181, 253, 0.55); border-style: dashed; }
+  .arch .block.consensus { border-color: rgba(232, 184, 109, 0.9); background: linear-gradient(160deg, rgba(232, 184, 109, 0.12), rgba(232, 184, 109, 0.02)); }
+  .arch .arrow { color: #556072; font-size: 1.2rem; }
+
+  /* Timeline strip */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.55rem;
+  }
+  @media (max-width: 820px) { .timeline { grid-template-columns: 1fr; } }
+  .phase {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .phase .p {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  .phase .m { font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
+  .phase ul li { font-size: 0.8rem; }
+
+  /* Ask block */
+  .ask {
+    background: linear-gradient(160deg, rgba(232, 184, 109, 0.12), rgba(62, 207, 172, 0.08));
+    border: 1px solid rgba(232, 184, 109, 0.35);
+    border-radius: 16px;
+    padding: 1.4rem;
+  }
+
+  /* Footer nav */
+  .nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.6rem 0.85rem;
+    padding-bottom: calc(0.6rem + env(safe-area-inset-bottom, 0px));
+    background: linear-gradient(to top, rgba(6,10,18,0.97) 60%, transparent);
+  }
+  .nav a {
+    text-decoration: none;
+    border: 1px solid var(--line-2);
+    background: rgba(16, 21, 32, 0.95);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    min-height: 2.75rem;
+    padding: 0 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav .next {
+    flex: 1;
+    background: rgba(62, 207, 172, 0.18);
+    border-color: rgba(62, 207, 172, 0.4);
+    color: #e6fff7;
+  }
+  .nav .pageno {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6a7488;
+    min-width: 3.2rem;
+    text-align: center;
+  }
+
+  .caveat {
+    border-left: 2px solid rgba(232, 184, 109, 0.5);
+    padding: 0.5rem 0.85rem;
+    background: rgba(232, 184, 109, 0.05);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+    max-width: 46rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- 1 · Title -->
+<section class="slide" id="s1">
+  <div class="slide-inner">
+    <div class="kicker">Finix · Detailed Investor Deck</div>
+    <h1>The finance cycle,<br>run by cooperating agents.</h1>
+    <p class="lede">Three specialised AI agents — Trading, Portfolio, Dividend — coordinated by a Consensus Engine and informed by a shared News layer. Built for individuals, organisations, and institutions.</p>
+    <p class="caption">Fiyinfoluwa Akano · MSc AI (Surrey) · founder</p>
+  </div>
+</section>
+
+<!-- 2 · The problem -->
+<section class="slide" id="s2">
+  <div class="slide-inner">
+    <div class="kicker">The problem</div>
+    <h2>Every AI investing product sells one tool. The cycle is what matters.</h2>
+    <div class="grid g3">
+      <div class="panel"><div class="stage">Profit problem</div><p>Retail investors miss asymmetric opportunities through information overload and emotional trading.</p></div>
+      <div class="panel"><div class="stage">Risk problem</div><p>Most investors are overexposed to one sector or hold losers too long. No dynamic hedging.</p></div>
+      <div class="panel"><div class="stage">Income problem</div><p>Dividends are treated as afterthought, not as a core cash-flow engine.</p></div>
+    </div>
+    <div class="caveat"><strong>Root cause — the silo problem:</strong> today's tools do not let trading logic, risk logic and income logic negotiate with each other. Every decision is made in isolation, and the losses live in the gaps.</div>
+  </div>
+</section>
+
+<!-- 3 · The solution architecture -->
+<section class="slide" id="s3">
+  <div class="slide-inner">
+    <div class="kicker">The solution</div>
+    <h2>Three agents. One Consensus Engine. Every decision negotiated.</h2>
+    <div class="arch" aria-label="Finix architecture">
+      <div class="row"><div class="block news"><div class="n">News Agent</div><div class="l">Shared context · market · macro · sentiment</div></div></div>
+      <div class="arrow">↓ context ↓</div>
+      <div class="row">
+        <div class="block trade"><div class="n">Trading Agent</div><div class="l">Finds edge</div></div>
+        <div class="block port"><div class="n">Portfolio Agent</div><div class="l">Protects capital</div></div>
+        <div class="block div"><div class="n">Dividend Agent</div><div class="l">Builds income</div></div>
+      </div>
+      <div class="arrow">↓ proposals ↓</div>
+      <div class="row"><div class="block consensus"><div class="n">Consensus Engine</div><div class="l">Arbiter · risk-veto · route</div></div></div>
+      <div class="arrow">↓</div>
+      <div class="row"><div class="block"><div class="n">Broker execution / user confirmation</div><div class="l">Explain layer on every decision</div></div></div>
+    </div>
+    <p><strong>The differentiator:</strong> agents don't run in sequence. Every proposal goes through Consensus — which weighs Profit, Risk and Income before allowing execution. "Good trade, bad portfolio" and "high yield, high risk" die at this layer.</p>
+  </div>
+</section>
+
+<!-- 4 · The Consensus Engine -->
+<section class="slide" id="s4">
+  <div class="slide-inner">
+    <div class="kicker">The Consensus Engine</div>
+    <h2>The negotiation loop.</h2>
+    <table>
+      <thead><tr><th>Step</th><th>What happens</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td><strong>Trading Agent</strong> proposes: <em>Buy AAPL · size · conviction · expected R</em></td></tr>
+        <tr><td><strong>2</strong></td><td><strong>Portfolio Agent</strong> stress-tests: sector exposure, VaR, drawdown vs high-water-mark. Approves, caps, or vetoes.</td></tr>
+        <tr><td><strong>3</strong></td><td><strong>Dividend Agent</strong> scores: yield-on-cost impact, dividend-cut probability, income-goal delta.</td></tr>
+        <tr><td><strong>4</strong></td><td><strong>News Agent</strong> attaches hard filters: earnings blackout, macro-release window, sentiment shock.</td></tr>
+        <tr><td><strong>5</strong></td><td><strong>Consensus Engine</strong>: <code>Score = Profit − λ_risk·Risk + λ_income·IncomeDelta</code>. Above threshold → execute. Below → send back for revision. Vetoed → journal + reason.</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Learning loop:</strong> every executed and vetoed decision is a labelled event. Meta-RL updates <code>λ</code> weights nightly on paper / demo book before touching live.</p>
+  </div>
+</section>
+
+<!-- 5 · Trading Agent -->
+<section class="slide" id="s5">
+  <div class="slide-inner">
+    <div class="kicker"><span class="dot t"></span>Trading Agent · <span class="badge live">Live on demo</span></div>
+    <h2>Find alpha. Under a validation gate.</h2>
+    <div class="grid g2">
+      <div>
+        <p><strong>Today:</strong> one validated zone-bounce strategy on EUR/USD, GBP/USD, USD/CAD. 7 concepts tested, 6 killed, 1 lives. Roughly 3–5 trades/week; 0.5–2% risk/trade; portfolio-wide 5% open-risk cap.</p>
+        <p><strong>Methods:</strong> pattern strategies today · PPO / DQN under the validation pipeline · transformer + LSTM for short-horizon price/volume · sentiment from the News Agent.</p>
+        <p><strong>Next-gen (R&amp;D):</strong> M001 multi-agent squad — specialised strikers, a risk sentinel, and an aggregator that allocates trade slots. Adopted so far: aggregator variant ×1.3 throughput at higher per-trade conviction, no drawdown cost.</p>
+      </div>
+      <div class="panel">
+        <div class="stage">Walk-forward evidence</div>
+        <table>
+          <tr><td>EUR/USD</td><td><strong>+11.34</strong> pips/trade · 7/7 OOS</td></tr>
+          <tr><td>GBP/USD</td><td><strong>+10.24</strong> · p = 0.001</td></tr>
+          <tr><td>USD/CAD</td><td><strong>+4.63</strong> · p = 0.028</td></tr>
+        </table>
+        <div class="stage" style="margin-top:0.8rem">Engineering</div>
+        <p>~380 passing tests · crash-resilient state · 15-min heartbeats · near-miss/loss vaults · portfolio-wide 5% risk cap.</p>
+        <div class="caveat" style="margin-top:0.4rem">Live-demo sample (16 trades, p=0.29) is too small to claim a live edge — and we say so.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · Portfolio Agent -->
+<section class="slide" id="s6">
+  <div class="slide-inner">
+    <div class="kicker"><span class="dot p"></span>Portfolio Agent · <span class="badge wip">MVP scaffold</span></div>
+    <h2>See everything. Protect it. Grow it.</h2>
+    <div class="grid g2">
+      <div>
+        <p><strong>Today:</strong> FastAPI service, unified ledger, three-tier broker-connector strategy (API → CSV → statement parser), encrypted broker credentials. Read-only against brokers — the product informs; the human executes.</p>
+        <p><strong>Methods:</strong> Modern Portfolio Theory + Black-Litterman priors · Bayesian correlation and tail-risk modelling · Graph Neural Network for hidden sector / cross-asset contagion · uncertainty-aware exposure sizing (Gaussian-NLL LSTM σ + τ threshold, productised from the dissertation).</p>
+        <p><strong>Wedge:</strong> Nigerian + Western broker coverage (Yochaa, Bamboo, Moomoo, Fidelity) — the diaspora segment incumbents structurally ignore.</p>
+      </div>
+      <div class="panel">
+        <div class="stage">Research anchor — MSc dissertation</div>
+        <table>
+          <tr><td>Terminal value ($1M start, held-out 2022–2025)</td><td><strong>~$1.6M</strong> vs ~$999k baseline</td></tr>
+          <tr><td>Sharpe</td><td><strong>+0.68 – 0.70</strong> vs −0.04</td></tr>
+          <tr><td>Difference significance</td><td><strong>p &lt; 10⁻¹²</strong> · CI [+$559k, +$814k]</td></tr>
+          <tr><td>Median MDD vs buy-and-hold</td><td><strong>−4pp</strong> (~22% vs ~26%)</td></tr>
+        </table>
+        <div class="caveat" style="margin-top:0.4rem">Academic backtest, not product performance. Worst-case tail <em>not</em> improved — hard exposure caps carry the caveat into code.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · Dividend Agent -->
+<section class="slide" id="s7">
+  <div class="slide-inner">
+    <div class="kicker"><span class="dot d"></span>Dividend Agent · <span class="badge wip">Scaffold + spec</span></div>
+    <h2>Income, finally instrumented.</h2>
+    <div class="grid g2">
+      <div>
+        <p><strong>Today:</strong> package <code>app/dividends/</code> exists inside the portfolio hub; KPIs defined before build — payout-realization rate + forward-yield accuracy.</p>
+        <p><strong>Methods:</strong> dividend-safety classifier (XGBoost on payout ratio, FCF trend, coverage) · survival analysis for cut-probability · forward-yield optimisation under user risk caps · per-jurisdiction tax-impact estimator.</p>
+        <p><strong>Goal-seek:</strong> user says "I want $500/month." Agent proposes rebalances that grow holdings toward the target within risk caps. Cash from dividends returns to the cycle — reinvest or fund the next trading opportunity.</p>
+      </div>
+      <div class="panel">
+        <div class="stage">Sub-components (v1 scope)</div>
+        <ul>
+          <li>Cross-broker dividend calendar</li>
+          <li>News watcher for announcements</li>
+          <li>Ex-date / record-date alerts</li>
+          <li>Tax-impact estimator per jurisdiction</li>
+          <li>Rebalance suggestions toward aristocrats</li>
+        </ul>
+        <div class="stage" style="margin-top:0.6rem">Differentiator for diaspora users</div>
+        <p>Tax estimator covers two jurisdictions at once — a real pain point ignored by every single-market incumbent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · News Agent -->
+<section class="slide" id="s8">
+  <div class="slide-inner">
+    <div class="kicker"><span class="dot n"></span>News Agent · <span class="badge todo">To build (Phase 1)</span></div>
+    <h2>The shared context layer.</h2>
+    <p>Cross-cutting layer that reads market news, macro data, earnings, filings, and social sentiment — and feeds every other agent so no one decides blind.</p>
+    <div class="grid g2">
+      <div class="panel">
+        <div class="stage">What it does</div>
+        <ul>
+          <li>Extracts structured events from unstructured news (earnings, guidance, M&amp;A, macro releases)</li>
+          <li>Stores embeddings in a vector database for retrieval-augmented reasoning</li>
+          <li>Publishes hard event flags to Consensus (Fed day, earnings blackout, sanctions events)</li>
+          <li>Serves sentiment signals to Trading Agent as candidate features (validation-gated)</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <div class="stage">Under the hood</div>
+        <ul>
+          <li>LangGraph orchestration around dual LLM providers (OpenAI + Anthropic)</li>
+          <li>Small-model default; escalate only on ambiguity</li>
+          <li>Aggressive caching + embeddings reuse</li>
+          <li>Provenance kept — every quoted event carries a citation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · Tech stack -->
+<section class="slide" id="s9">
+  <div class="slide-inner">
+    <div class="kicker">Tech stack</div>
+    <h2>Chosen for velocity now, scale later.</h2>
+    <div class="grid g2">
+      <table>
+        <thead><tr><th>Layer</th><th>Choice</th></tr></thead>
+        <tbody>
+          <tr><td>Backend</td><td>Python 3.11 · FastAPI · Pydantic</td></tr>
+          <tr><td>Agent orchestration</td><td>LangGraph + custom hot-path</td></tr>
+          <tr><td>ML / RL</td><td>PyTorch · Stable-Baselines3 · XGBoost</td></tr>
+          <tr><td>Broker adapters</td><td>MT5 · Moomoo · Fidelity SDKs · CSV/statement fallbacks</td></tr>
+          <tr><td>Databases</td><td>PostgreSQL · Redis · Qdrant / pgvector · DuckDB + Parquet</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <thead><tr><th>Layer</th><th>Choice</th></tr></thead>
+        <tbody>
+          <tr><td>Frontend</td><td>Next.js · Tailwind · shadcn/ui · Recharts</td></tr>
+          <tr><td>Mobile</td><td>PWA → native</td></tr>
+          <tr><td>Infra</td><td>AWS (us-east-1 + eu-west-2) · Terraform · Docker</td></tr>
+          <tr><td>Secrets</td><td>AWS KMS · Doppler</td></tr>
+          <tr><td>Observability</td><td>Prometheus · Grafana · Loki · existing heartbeat monitor</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">Data vendors: Polygon.io, Finnhub, SEC EDGAR, Yahoo, FRED. Dual LLM providers. Standard fintech practice: SOC2 Type 1 readiness begins in Phase 3.</p>
+  </div>
+</section>
+
+<!-- 10 · Progress so far -->
+<section class="slide" id="s10">
+  <div class="slide-inner">
+    <div class="kicker">Progress · what exists today (2026-07)</div>
+    <h2>Honest state of the build.</h2>
+    <table>
+      <thead><tr><th>Component</th><th>Status</th><th>Evidence</th></tr></thead>
+      <tbody>
+        <tr><td>Trading Agent</td><td><span class="badge live">Live demo</span></td><td>EUR/USD + GBP/USD + USD/CAD · ~380 tests · walk-forward validated</td></tr>
+        <tr><td>Portfolio Hub</td><td><span class="badge wip">MVP scaffold</span></td><td>FastAPI · unified ledger · three-tier connectors · encrypted keys</td></tr>
+        <tr><td>Dividend Agent</td><td><span class="badge wip">Scaffold + spec</span></td><td><code>app/dividends/</code> · KPIs defined pre-build</td></tr>
+        <tr><td>Risk research</td><td><span class="badge live">Complete</span></td><td>MSc dissertation · paired inference · ablation · calibration · 96 pp</td></tr>
+        <tr><td>Validation pipeline</td><td><span class="badge live">In production</span></td><td>Pre-registered E001+ · BH-FDR · kill lists · heartbeat monitor</td></tr>
+        <tr><td>Consensus Engine</td><td><span class="badge todo">Phase 1</span></td><td>Spec draft in flight</td></tr>
+        <tr><td>News Agent</td><td><span class="badge todo">Phase 1</span></td><td>Design set</td></tr>
+        <tr><td>Company + compliance</td><td><span class="badge todo">Phase 0</span></td><td>UK Ltd · fintech counsel intake</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 11 · Timeline -->
+<section class="slide" id="s11">
+  <div class="slide-inner">
+    <div class="kicker">Roadmap · 24 months, funding-gated</div>
+    <h2>Milestone-driven, not calendar-driven.</h2>
+    <div class="timeline">
+      <div class="phase">
+        <div class="m">Phase 0</div><div class="p">Foundation</div>
+        <ul><li>Incorporate</li><li>1st hire</li><li>Counsel</li><li>Consensus spec</li></ul>
+        <div class="caption">Aug – Oct 2026</div>
+      </div>
+      <div class="phase">
+        <div class="m">Phase 1</div><div class="p">Consensus + integrated backtest</div>
+        <ul><li>Engine built</li><li>News Agent v1</li><li>Pre-registered backtest</li><li>Hire #2</li></ul>
+        <div class="caption">Nov 2026 – Feb 2027</div>
+      </div>
+      <div class="phase">
+        <div class="m">Phase 2</div><div class="p">Paper → paid pilot</div>
+        <ul><li>Portfolio v1 · 4 brokers</li><li>Dividend v1</li><li>Explain layer</li><li>Hire #3 (quant)</li></ul>
+        <div class="caption">Mar – Jun 2027</div>
+      </div>
+      <div class="phase">
+        <div class="m">Phase 3</div><div class="p">First revenue</div>
+        <ul><li>B2C launch</li><li>Trading licence pilot</li><li>BD hire</li><li>SOC2 T1 start</li></ul>
+        <div class="caption">Jul – Dec 2027</div>
+      </div>
+      <div class="phase">
+        <div class="m">Phase 4</div><div class="p">Scale</div>
+        <ul><li>B2B API pilot</li><li>Mobile native</li><li>SOC2 T1 done</li><li>Regulated-path gate</li></ul>
+        <div class="caption">Jan – Jun 2028</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 · Team -->
+<section class="slide" id="s12">
+  <div class="slide-inner">
+    <div class="kicker">Team we're building</div>
+    <h2>Sequenced so each hire earns the next.</h2>
+    <table>
+      <thead><tr><th>#</th><th>Role</th><th>When</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Founding engineer</strong> — backend + ML (mid-senior)</td><td>Phase 0</td><td>Consensus Engine + broker connectors</td></tr>
+        <tr><td>2</td><td>Full-stack engineer (mid)</td><td>Phase 1</td><td>Dashboard, auth, explain-layer UI</td></tr>
+        <tr><td>3</td><td>Quant researcher (mid)</td><td>Phase 2</td><td>Owns statistical adequacy; frees founder</td></tr>
+        <tr><td>4</td><td>Growth / BD</td><td>Phase 3</td><td>Design partners → paying users</td></tr>
+        <tr><td>5</td><td>MLOps / infra</td><td>Phase 4</td><td>Cost, reliability, model lifecycle</td></tr>
+        <tr><td>6</td><td>Full-stack / mobile</td><td>Phase 4</td><td>PWA → native</td></tr>
+        <tr><td>7</td><td>Compliance / risk (frac → FT)</td><td>Phase 4</td><td>Institutional path</td></tr>
+      </tbody>
+    </table>
+    <p class="caption">Advisors: quant-fund veteran · fintech operator · academic. External help: fintech solicitor · fractional CFO (P3+) · design specialist.</p>
+  </div>
+</section>
+
+<!-- 13 · Market / who it's for -->
+<section class="slide" id="s13">
+  <div class="slide-inner">
+    <div class="kicker">Who it's for</div>
+    <h2>One cycle. Multiple scales.</h2>
+    <div class="grid g3">
+      <div class="panel">
+        <div class="stage">Retail</div>
+        <p>Individuals, families, busy professionals — one dashboard for every account, dividend planning, capital preservation.</p>
+      </div>
+      <div class="panel">
+        <div class="stage">SME / family office</div>
+        <p>Treasury and long-horizon capital — cycle discipline without an in-house desk. Multi-broker + multi-currency out of the box.</p>
+      </div>
+      <div class="panel">
+        <div class="stage">Institutional</div>
+        <p>Portfolio-intelligence API for brokers &amp; fintechs; dedicated deployments for funds where in-house desks want the Consensus layer as infrastructure.</p>
+      </div>
+    </div>
+    <p><strong>Wedge:</strong> Nigerian + Western broker coverage → diaspora investors incumbents ignore. Same platform scales up to institutional deployment because the architecture is the same — permissions differ.</p>
+  </div>
+</section>
+
+<!-- 14 · Business model -->
+<section class="slide" id="s14">
+  <div class="slide-inner">
+    <div class="kicker">Business model</div>
+    <h2>Five revenue streams, staged by regulatory simplicity.</h2>
+    <table>
+      <thead><tr><th>Stream</th><th>Model</th><th>Stage</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Portfolio Hub subscription</strong></td><td>Freemium B2C — ledger free, risk engine premium</td><td>First revenue</td></tr>
+        <tr><td><strong>Dividend premium tier</strong></td><td>Add-on subscription</td><td>Fast follow</td></tr>
+        <tr><td><strong>Trading software licence</strong></td><td>Annual, self-hosted on customer's broker</td><td>Parallel</td></tr>
+        <tr><td><strong>B2B portfolio-intelligence API</strong></td><td>Per-seat / per-call for brokers &amp; fintechs</td><td>Phase 4</td></tr>
+        <tr><td><strong>Managed strategies</strong></td><td>Performance fees</td><td>Only after live track record + regulated cover</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 15 · KPIs -->
+<section class="slide" id="s15">
+  <div class="slide-inner">
+    <div class="kicker">KPIs · what success looks like</div>
+    <h2>Numbers we're aiming at, labelled as targets.</h2>
+    <div class="grid g4">
+      <div class="stat"><span class="n">&gt; 1.5</span><span class="l">Sharpe target</span><span class="sub">Consensus Engine on integrated portfolio backtest</span></div>
+      <div class="stat"><span class="n">−25%</span><span class="l">MDD reduction</span><span class="sub">vs S&amp;P 500 benchmark</span></div>
+      <div class="stat"><span class="n">≥ 3.5%</span><span class="l">Dividend yield</span><span class="sub">with cut-probability &lt; 5%</span></div>
+      <div class="stat"><span class="n">&gt; 80%</span><span class="l">3-month retention</span><span class="sub">business KPI, Phase 3</span></div>
+    </div>
+    <div class="caveat">These are pre-registered <em>targets</em>, not delivered results. Live-money numbers only ship after a statistically adequate sample.</div>
+  </div>
+</section>
+
+<!-- 16 · The ask -->
+<section class="slide" id="s16">
+  <div class="slide-inner">
+    <div class="kicker">The ask</div>
+    <h2>Pre-seed £400k · 15 months · to end of Phase 2.</h2>
+    <div class="ask">
+      <div class="grid g4">
+        <div class="stat"><span class="n">£180k</span><span class="l">Hires 1–3</span><span class="sub">Backend/ML · full-stack · quant researcher</span></div>
+        <div class="stat"><span class="n">£45k</span><span class="l">Infra + data</span><span class="sub">AWS · Polygon · Finnhub · LLM · vector DB</span></div>
+        <div class="stat"><span class="n">£45k</span><span class="l">Founder</span><span class="sub">Below-market for 15 months</span></div>
+        <div class="stat"><span class="n">£130k</span><span class="l">Everything else</span><span class="sub">Counsel · design · buffer · compliance work</span></div>
+      </div>
+    </div>
+    <p><strong>Milestones the raise reaches:</strong> Consensus Engine + News Agent shipped · Portfolio Hub v1 (4 brokers) + Dividend Agent v1 live · integrated backtest passes pre-registered gate · paper trading with verdict registry · first paying design partner · first B2B LOI · Seed conversation opens.</p>
+    <p><strong>Also open:</strong> 5 design-partner slots · founding-engineer roles · advisor equity for quant-fund veteran + fintech operator + academic.</p>
+  </div>
+</section>
+
+<!-- 17 · Close -->
+<section class="slide" id="s17">
+  <div class="slide-inner" style="text-align:left">
+    <div class="kicker">Finix</div>
+    <h1>Trade. Protect. Earn.<br>Repeat — as one system.</h1>
+    <p class="lede">Three agents. One Consensus Engine. Built for individuals, organisations, and institutions.</p>
+    <p class="caption">Elevator deck: <a href="./pitch-deck.html" style="color:var(--accent-2)">/pitch-deck.html</a> · full plan: <code>finix-master-plan.md</code> · brief: <code>finix-investor-brief.md</code></p>
+    <p class="caption">Fiyinfoluwa Akano · fiyinfoluwa2akano@icloud.com · <a href="https://github.com/TheFinix13" style="color:var(--accent-2)">github.com/TheFinix13</a></p>
+  </div>
+</section>
+
+<nav class="nav" aria-label="Slide controls">
+  <a class="prev" id="prev" href="#s1">←</a>
+  <span class="pageno" id="pageno">1 / 17</span>
+  <a class="next" id="next" href="#s2">Next · swipe up ↑</a>
+</nav>
+
+<script>
+  (function () {
+    var ids = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13','s14','s15','s16','s17'];
+    var prev = document.getElementById('prev');
+    var next = document.getElementById('next');
+    var page = document.getElementById('pageno');
+    function indexFromHash() {
+      var h = (location.hash || '#s1').replace('#','');
+      var i = ids.indexOf(h);
+      return i < 0 ? 0 : i;
+    }
+    function sync() {
+      var i = indexFromHash();
+      page.textContent = (i + 1) + ' / ' + ids.length;
+      prev.href = '#' + ids[Math.max(0, i - 1)];
+      next.href = '#' + ids[Math.min(ids.length - 1, i + 1)];
+      next.textContent = i === ids.length - 1 ? 'End' : 'Next · swipe up ↑';
+    }
+    window.addEventListener('hashchange', sync);
+    var slides = ids.map(function (id) { return document.getElementById(id); });
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          var id = e.target.id;
+          if (location.hash !== '#' + id) {
+            history.replaceState(null, '', '#' + id);
+            sync();
+          }
+        });
+      }, { threshold: 0.55 });
+      slides.forEach(function (s) { if (s) io.observe(s); });
+    }
+    sync();
+  })();
+</script>
+</body>
+</html>

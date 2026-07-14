@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Finix — Presentations</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Fraunces:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#060a12; --ink:#f2ede2; --muted:#939eb4; --line:rgba(242,237,226,0.14); --accent:#e8b86d; --accent-2:#3ecfac; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100dvh;background:var(--bg);color:var(--ink);font-family:"Figtree",system-ui,sans-serif}
+  body{background:radial-gradient(900px 460px at 10% -6%,rgba(232,184,109,0.14),transparent 55%),radial-gradient(760px 420px at 95% 6%,rgba(62,207,172,0.1),transparent 52%),var(--bg);display:flex;flex-direction:column;justify-content:center;padding:clamp(1.2rem,5vh,3rem) clamp(1.1rem,6vw,4rem);gap:1.6rem}
+  .k{color:var(--accent);letter-spacing:0.22em;text-transform:uppercase;font-size:0.72rem;font-weight:700}
+  h1{font-family:"Fraunces",Georgia,serif;font-weight:900;font-size:clamp(2rem,5.4vw,3.4rem);line-height:1.05;letter-spacing:-0.02em;max-width:16ch}
+  p{color:var(--muted);font-size:clamp(0.95rem,1.6vw,1.1rem);max-width:38rem;line-height:1.55}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:0.6rem}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  a.card{display:flex;flex-direction:column;gap:0.55rem;text-decoration:none;color:var(--ink);border:1px solid var(--line);background:rgba(16,22,34,0.7);border-radius:16px;padding:1.4rem;transition:border-color 0.2s}
+  a.card:hover{border-color:rgba(62,207,172,0.5)}
+  a.card h2{font-family:"Fraunces",serif;font-size:1.35rem;letter-spacing:-0.02em}
+  a.card .l{color:var(--accent-2);font-weight:700;font-size:0.85rem;margin-top:auto}
+  small{color:#5a6480;letter-spacing:0.05em;font-size:0.75rem}
+</style></head>
+<body>
+  <div class="k">Finix · Finance Cycle</div>
+  <h1>Two decks. Same story, different depth.</h1>
+  <p>Open the one that fits the moment.</p>
+  <div class="cards">
+    <a class="card" href="./"><h2>Elevator deck</h2><p>9 slides · 90 seconds · the pitch you give walking to a meeting. Three-agent cycle, plain language, everyone gets it.</p><span class="l">Open elevator deck →</span></a>
+    <a class="card" href="./detailed.html"><h2>Detailed deck</h2><p>17 slides · boardroom depth · architecture, evidence, tech stack, 24-month roadmap, hiring plan, and the ask.</p><span class="l">Open detailed deck →</span></a>
+  </div>
+  <small>Fiyinfoluwa Akano · Finix · confidential draft</small>
+</body></html>
